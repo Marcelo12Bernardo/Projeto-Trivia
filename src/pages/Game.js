@@ -4,7 +4,7 @@ class Game extends Component {
   render() {
     return (
       <h1>
-        Página do Jogo
+        Game Page
       </h1>
     );
   }
