@@ -2,7 +2,7 @@ import userEvent from '@testing-library/user-event';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 import React from 'react'
 import { screen } from '@testing-library/react';
-import { handleClick } from '../pages/Login'
+import Login from '../pages/Login'
 import App from '../App'
 
 const BTN_PLAY ='btn-play'
@@ -59,5 +59,18 @@ describe ('Testa a página Login', () => {
     const { pathname } = history.location
 
     expect(pathname).toBe('/settings')
+  })
+
+  it('Verifica se caso chamar a função handleClick retorna um erro', () => {
+    const { history } = renderWithRouterAndRedux(<App />);
+    const fakeButton = screen.getByTestId('btn-settings')
+
+    fakeButton.name = 'undefined'
+
+    userEvent.click(fakeButton)
+
+    const { pathname } = history.location
+
+    expect(pathname).toBe('/not-found')
   })
 });

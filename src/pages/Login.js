@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import fetchTokenAPI from '../services/fetchAPI';
 
-class Login extends Component {
+export default class Login extends Component {
   state = {
     name: '',
     email: '',
@@ -13,25 +13,25 @@ class Login extends Component {
   handleClick = ({ target: { name } }) => {
     const { history } = this.props;
 
-    // switch (name) {
-    // case 'playButton':
-    //   this.saveToken();
-    //   history.push('/game');
-    //   break;
-
-    // case 'settingsButton':
-    //   history.push('/settings');
-    //   break;
-    // default:
-    //   history.push('/not-found');
-    // }
-
-    if (name === 'playButton') {
+    switch (name) {
+    case 'playButton':
       this.saveToken();
       history.push('/game');
-    } else if (name === 'settingsButton') {
+      break;
+
+    case 'settingsButton':
       history.push('/settings');
+      break;
+    default:
+      history.push('/not-found');
     }
+
+    // if (name === 'playButton') {
+    //   this.saveToken();
+    //   history.push('/game');
+    // } else if (name === 'settingsButton') {
+    //   history.push('/settings');
+    // }
   };
 
   saveToken = async () => {
@@ -101,4 +101,4 @@ Login.propTypes = {
   }),
 }.isRequired;
 
-export default connect()(Login);
+connect()(Login);
