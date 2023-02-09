@@ -13,25 +13,25 @@ class Login extends Component {
   handleClick = ({ target: { name } }) => {
     const { history } = this.props;
 
-    switch (name) {
-    case 'playButton':
-      this.saveToken();
-      history.push('/game');
-      break;
-
-    case 'settingsButton':
-      history.push('/settings');
-      break;
-    default:
-      return null;
-    }
-
-    // if (name === 'playButton') {
+    // switch (name) {
+    // case 'playButton':
     //   this.saveToken();
     //   history.push('/game');
-    // } else if (name === 'settingsButton') {
+    //   break;
+
+    // case 'settingsButton':
     //   history.push('/settings');
+    //   break;
+    // default:
+    //   history.push('/not-found');
     // }
+
+    if (name === 'playButton') {
+      this.saveToken();
+      history.push('/game');
+    } else if (name === 'settingsButton') {
+      history.push('/settings');
+    }
   };
 
   saveToken = async () => {
