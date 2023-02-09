@@ -10,10 +10,28 @@ class Login extends Component {
     isDisabled: true,
   };
 
-  handleClick = () => {
+  handleClick = ({ target: { name } }) => {
     const { history } = this.props;
-    this.saveToken();
-    history.push('/game');
+
+    switch (name) {
+    case 'playButton':
+      this.saveToken();
+      history.push('/game');
+      break;
+
+    case 'settingsButton':
+      history.push('/settings');
+      break;
+    default:
+      return null;
+    }
+
+    // if (name === 'playButton') {
+    //   this.saveToken();
+    //   history.push('/game');
+    // } else if (name === 'settingsButton') {
+    //   history.push('/settings');
+    // }
   };
 
   saveToken = async () => {
@@ -56,11 +74,20 @@ class Login extends Component {
           />
           <button
             type="button"
+            name="playButton"
             disabled={ isDisabled }
             onClick={ this.handleClick }
             data-testid="btn-play"
           >
             Play
+          </button>
+          <button
+            type="button"
+            name="settingsButton"
+            data-testid="btn-settings"
+            onClick={ this.handleClick }
+          >
+            Settings
           </button>
         </form>
       </main>
