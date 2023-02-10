@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import fetchTokenAPI from '../services/fetchAPI';
+import { getEmail, getName } from '../redux/actions';
+import md5 from 'crypto-js/md5';
 
 class Login extends Component {
   state = {
@@ -11,22 +13,19 @@ class Login extends Component {
   };
 
   handleClick = ({ target: { name } }) => {
-    const { history } = this.props;
-
-    // switch (name) {
-    // case 'playButton':
-    //   this.saveToken();
-    //   history.push('/game');
-    //   break;
-
-    // case 'settingsButton':
-    //   history.push('/settings');
-    //   break;
-    // default:
-    //   history.push('/not-found');
-    // }
-
+    const { history, dispatch } = this.props;
+    // arrayObject = [{
+      //   name,
+      //   score,
+      //   picture,
+      // }]
+      // localStorage.setItem(ranking, arrayObject )
+      
+      
     if (name === 'playButton') {
+      const { email, name } = this.state;    
+      dispatch(getEmail(email));
+      dispatch(getName(name));
       this.saveToken();
       history.push('/game');
     } else if (name === 'settingsButton') {
