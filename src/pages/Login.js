@@ -2,31 +2,28 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import fetchTokenAPI from '../services/fetchAPI';
+import { getEmail, getName } from '../redux/actions';
 
 class Login extends Component {
   state = {
-    name: '',
+    userName: '',
     email: '',
     isDisabled: true,
   };
 
   handleClick = ({ target: { name } }) => {
-    const { history } = this.props;
-
-    // switch (name) {
-    // case 'playButton':
-    //   this.saveToken();
-    //   history.push('/game');
-    //   break;
-
-    // case 'settingsButton':
-    //   history.push('/settings');
-    //   break;
-    // default:
-    //   history.push('/not-found');
-    // }
+    const { history, dispatch } = this.props;
+    // arrayObject = [{
+    //   name,
+    //   score,
+    //   picture,
+    // }]
+    // localStorage.setItem(ranking, arrayObject )
 
     if (name === 'playButton') {
+      const { email, userName } = this.state;
+      dispatch(getEmail(email));
+      dispatch(getName(userName));
       this.saveToken();
       history.push('/game');
     } else if (name === 'settingsButton') {
@@ -46,15 +43,15 @@ class Login extends Component {
   };
 
   validate = () => {
-    const { email, name } = this.state;
+    const { email, userName } = this.state;
     const minLengthName = 3;
-    const nameValidate = name.length >= minLengthName;
+    const nameValidate = userName.length >= minLengthName;
     const emailValidate = (/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/).test(email);
     this.setState({ isDisabled: !(nameValidate && emailValidate) });
   };
 
   render() {
-    const { email, name, isDisabled } = this.state;
+    const { email, userName, isDisabled } = this.state;
     return (
       <main>
         <form>
@@ -67,8 +64,8 @@ class Login extends Component {
           />
           <input
             type="text"
-            value={ name }
-            name="name"
+            value={ userName }
+            name="userName"
             data-testid="input-player-name"
             onChange={ this.handleChange }
           />
