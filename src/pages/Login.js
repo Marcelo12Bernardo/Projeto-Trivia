@@ -13,22 +13,29 @@ class Login extends Component {
 
   handleClick = ({ target: { name } }) => {
     const { history, dispatch } = this.props;
-    // arrayObject = [{
-    //   name,
-    //   score,
-    //   picture,
-    // }]
-    // localStorage.setItem(ranking, arrayObject )
+    const { email, userName } = this.state;
 
-    if (name === 'playButton') {
-      const { email, userName } = this.state;
-      dispatch(getEmail(email));
-      dispatch(getName(userName));
+    switch (name) {
+    case 'playButton':
       this.saveToken();
       history.push('/game');
-    } else if (name === 'settingsButton') {
+      dispatch(getEmail(email));
+      dispatch(getName(userName));
+      break;
+
+    case 'settingsButton':
       history.push('/settings');
+      break;
+    default:
+      history.push('/not-found');
     }
+
+    // if (name === 'playButton') {
+    //   this.saveToken();
+    //   history.push('/game');
+    // } else if (name === 'settingsButton') {
+    //   history.push('/settings');
+    // }
   };
 
   saveToken = async () => {
