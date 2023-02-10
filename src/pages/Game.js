@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import getGravatarEmail from '../services/md5Function';
 import PropTypes from 'prop-types';
+import getGravatarEmail from '../services/md5Function';
 
 class Game extends Component {
   render() {
@@ -9,9 +9,10 @@ class Game extends Component {
     const getAvatar = getGravatarEmail(email);
     return (
       <div>
-        <header>          
+        <header>
           <img
-            src={`https://www.gravatar.com/avatar/${getAvatar}`}
+            src={ `https://www.gravatar.com/avatar/${getAvatar}` }
+            alt="avatar"
             data-testid="header-profile-picture"
           />
           <div
@@ -37,12 +38,12 @@ Game.propTypes = {
   email: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
-}
+};
 
 const mapStateToProps = ({ player }) => ({
   email: player.gravatarEmail,
   name: player.name,
   score: player.score,
-})
+});
 
 export default connect(mapStateToProps)(Game);
