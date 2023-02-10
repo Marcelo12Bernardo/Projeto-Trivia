@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import fetchTokenAPI from '../services/fetchAPI';
 import { getEmail, getName } from '../redux/actions';
+/* import forQuestion from '../services/getQuestions'; */
 
 class Login extends Component {
   state = {
