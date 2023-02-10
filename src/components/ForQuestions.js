@@ -33,6 +33,7 @@ class ForQuestions extends React.Component {
   render() {
     const { correctAnswer, incorrectAnswer } = this.props;
     const alternatives = this.shufflyArr([correctAnswer, incorrectAnswer]);
+    console.log(alternatives);
     return (
       <div>
         {
