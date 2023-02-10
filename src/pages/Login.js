@@ -15,11 +15,6 @@ class Login extends Component {
     const { history, dispatch } = this.props;
     const { email, userName } = this.state;
 
-    // if (name === 'playButton') {
-    //   dispatch(getEmail(email));
-    //   dispatch(getName(userName));
-    // const { history } = this.props;
-
     switch (name) {
     case 'playButton':
       this.saveToken();
