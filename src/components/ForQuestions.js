@@ -2,58 +2,83 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 class ForQuestions extends React.Component {
-  /*   state = {
-      category: '',
-      correct_answer: '',
-      difficulty: '',
-      incorrect_answers: [],
-      question: '',
-      type: '',
-    }; */
+  state = {
+    answersSuffled: [],
+  };
 
-  shufflyArr = (array) => {
-    for (let i = array.length - 1; i > 0; i -= 1) {
+  componentDidMount() {
+    this.shuffle();
+  }
+
+  next = () => {
+    const { nextQuestion } = this.props;
+    setTimeout(() => {
+      nextQuestion();
+      setTimeout(() => {
+        this.shuffle();
+      });
+    }, '2500');
+  };
+
+  shuffle = () => {
+    const { answers } = this.props;
+    for (let i = answers.length - 1; i > 0; i -= 1) {
       const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
+      const temp = answers[i];
+      answers[i] = answers[j];
+      answers[j] = temp;
     }
-    return array;
+    return this.setState({
+      answersSuffled: answers,
+    });
   };
-
-  isCorrect = (arr) => {
-    const { correctAnswer, incorrectAnswer } = this.props;
-    let forResult = `wrong-answer-${incorrectAnswer.indexOf(arr)}`;
-    if (correctAnswer === arr) {
-      forResult = 'correct-answer';
-    }
-    return forResult;
-  };
-
-  // Ricardo Kulhkamp
 
   render() {
-    const { correctAnswer, incorrectAnswer } = this.props;
-    const alternatives = this.shufflyArr([correctAnswer, incorrectAnswer]);
-    console.log(alternatives);
+    const { question, category, correctAnswer } = this.props;
+    const { answersSuffled } = this.state;
     return (
       <div>
-        {
-          alternatives.map((textAnswer, index) => (
-            <button
-              data-testid={ this.isCorrect(textAnswer) }
-              key={ index }
-            >
-              { textAnswer }
-            </button>
-          ))
-        }
+        <p
+          data-testid="question-category"
+        >
+          { category }
+        </p>
+        <p
+          data-testid="question-text"
+        >
+          { question }
+        </p>
+        <div
+          data-testid="answer-options"
+        >
+          {
+            answersSuffled.map((answer, index) => (
+              <button
+                key={ index }
+                onClick={ this.next }
+                className={ answer.includes(correctAnswer)
+                  ? 'correctButton'
+                  : 'wrongButton' }
+                data-testid={ answer.includes(correctAnswer)
+                  ? 'correct-answer'
+                  : `wrong-answer-${index}` }
+              >
+                { answer }
+              </button>
+            ))
+          }
+        </div>
       </div>
     );
   }
 }
 
 ForQuestions.propTypes = {
-  correctAnswer: PropTypes.string.isRequired,
-  incorrectAnswer: PropTypes.string.isRequired,
-};
+  correctAnswer: PropTypes.string,
+  incorrectAnswer: PropTypes.string,
+  answers: PropTypes.shape({
+    map: PropTypes.func,
+  }),
+}.isRequired;
 
 export default ForQuestions;
