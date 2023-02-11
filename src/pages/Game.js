@@ -13,7 +13,6 @@ class Game extends Component {
   };
 
   componentDidMount() {
-    // this.verifyToken();
     this.getQuestions();
   }
 
@@ -82,22 +81,11 @@ class Game extends Component {
           && <ForQuestions
             category={ questions[indexQuestion].category }
             correctAnswer={ questions[indexQuestion].correct_answer }
-            // incorrectAnswers={ questions[indexQuestion].incorrect_answers }
             answers={ [...questions[indexQuestion].incorrect_answers,
               questions[indexQuestion].correct_answer] }
             question={ questions[indexQuestion].question }
             nextQuestion={ this.nextQuestion }
           />}
-
-          {/* { questions.length > 0 && questions.map((quest, index) => (
-          <ForQuestions
-            key={ index }
-            category={ quest.category }
-            correctAnswer={ quest.correct_answer }
-            answers={ [...quest.incorrect_answers, quest.correct_answer] }
-            question={ quest.question }
-          />
-        ))} */}
         </div>
       )
     );
