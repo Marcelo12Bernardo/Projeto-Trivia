@@ -4,11 +4,13 @@ import Header from '../components/Header';
 import forQuestion from '../services/getQuestions';
 import ForQuestions from '../components/ForQuestions';
 import '../styles/Game.css';
+import Timer from '../components/Timer';
 
 class Game extends Component {
   state = {
     questions: [],
     indexQuestion: 0,
+    isDisabled: false,
   };
 
   componentDidMount() {
@@ -23,6 +25,12 @@ class Game extends Component {
       localStorage.removeItem('token');
       history.push('/');
     }
+  };
+
+  finishTime = () => {
+    this.setState({
+      isDisabled: true,
+    });
   };
 
   nextQuestion = () => {
@@ -48,7 +56,7 @@ class Game extends Component {
   };
 
   render() {
-    const { questions, indexQuestion } = this.state;
+    const { questions, indexQuestion, isDisabled } = this.state;
     return (
       questions.length === 0 ? <h1> Loading... </h1> : (
         <div>
@@ -56,7 +64,7 @@ class Game extends Component {
           <h1>
             Game Page
           </h1>
-
+          <Timer finishTime={ this.finishTime } />
           { questions.length > 0
 
           && <ForQuestions
@@ -65,6 +73,7 @@ class Game extends Component {
             answers={ [...questions[indexQuestion].incorrect_answers,
               questions[indexQuestion].correct_answer] }
             question={ questions[indexQuestion].question }
+            isDisabled={ isDisabled }
             nextQuestion={ this.nextQuestion }
           />}
         </div>
