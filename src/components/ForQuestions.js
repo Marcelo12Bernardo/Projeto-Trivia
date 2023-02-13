@@ -38,7 +38,7 @@ class ForQuestions extends React.Component {
   };
 
   render() {
-    const { question, category, correctAnswer } = this.props;
+    const { question, category, correctAnswer, isDisabled } = this.props;
     const { answersSuffled, isAnswered } = this.state;
     return (
       <div>
