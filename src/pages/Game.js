@@ -71,11 +71,13 @@ class Game extends Component {
           <h1>
             Game Page
           </h1>
-          <Timer finishTime={ this.finishTime } />
+          <Timer
+            finishTime={ this.finishTime }
+            getSeconds={ this.getSeconds }
+          />
           { questions.length > 0
 
           && <ForQuestions
-            getSeconds={ this.getSeconds }
             seconds={ seconds }
             finishTime={ this.finishTime }
             difficulty={ questions[indexQuestion].difficulty }

@@ -8,10 +8,12 @@ class Timer extends Component {
 
   componentDidMount() {
     const ONE_SECOND = 1000;
+    const { getSeconds } = this.props;
     this.intervalID = setInterval(() => {
+      const { seconds } = this.state;
       this.setState((prevState) => ({
         seconds: prevState.seconds - 1,
-      }));
+      }), getSeconds(seconds));
     }, ONE_SECOND);
   }
 
