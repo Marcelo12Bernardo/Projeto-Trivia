@@ -17,30 +17,23 @@ class Login extends Component {
 
     switch (name) {
     case 'playButton':
-      this.saveToken();
-      history.push('/game');
       dispatch(getEmail(email));
       dispatch(getName(userName));
+      this.saveToken();
       break;
-
     case 'settingsButton':
       history.push('/settings');
       break;
     default:
       history.push('/not-found');
     }
-
-    // if (name === 'playButton') {
-    //   this.saveToken();
-    //   history.push('/game');
-    // } else if (name === 'settingsButton') {
-    //   history.push('/settings');
-    // }
   };
 
   saveToken = async () => {
+    const { history } = this.props;
     const token = await fetchTokenAPI();
-    localStorage.setItem('token', token.token);
+    localStorage.setItem('token', token);
+    history.push('/game');
   };
 
   handleChange = ({ target: { name, value } }) => {
