@@ -34,7 +34,7 @@ class ForQuestions extends React.Component {
   };
 
   render() {
-    const { question, category, correctAnswer } = this.props;
+    const { question, category, correctAnswer, isDisabled } = this.props;
     const { answersSuffled } = this.state;
     return (
       <div>
@@ -62,6 +62,7 @@ class ForQuestions extends React.Component {
                 data-testid={ answer.includes(correctAnswer)
                   ? 'correct-answer'
                   : `wrong-answer-${index}` }
+                disabled={ isDisabled }
               >
                 { answer }
               </button>
