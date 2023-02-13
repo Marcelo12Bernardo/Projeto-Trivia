@@ -19,7 +19,7 @@ class Timer extends Component {
     const { finishTime } = this.props;
     if (prevState.seconds === 1) {
       clearInterval(this.intervalID);
-      finishTime();
+      finishTime(prevState.seconds);
     }
   }
 

@@ -11,6 +11,7 @@ class Game extends Component {
     questions: [],
     indexQuestion: 0,
     isDisabled: false,
+    seconds: 0,
   };
 
   componentDidMount() {
@@ -25,6 +26,12 @@ class Game extends Component {
       localStorage.removeItem('token');
       history.push('/');
     }
+  };
+
+  getSeconds = (seconds) => {
+    this.setState({
+      seconds,
+    });
   };
 
   finishTime = () => {
@@ -56,7 +63,7 @@ class Game extends Component {
   };
 
   render() {
-    const { questions, indexQuestion, isDisabled } = this.state;
+    const { questions, indexQuestion, isDisabled, seconds } = this.state;
     return (
       questions.length === 0 ? <h1> Loading... </h1> : (
         <div>
@@ -68,6 +75,10 @@ class Game extends Component {
           { questions.length > 0
 
           && <ForQuestions
+            getSeconds={ this.getSeconds }
+            seconds={ seconds }
+            finishTime={ this.finishTime }
+            difficulty={ questions[indexQuestion].difficulty }
             category={ questions[indexQuestion].category }
             correctAnswer={ questions[indexQuestion].correct_answer }
             answers={ [...questions[indexQuestion].incorrect_answers,
