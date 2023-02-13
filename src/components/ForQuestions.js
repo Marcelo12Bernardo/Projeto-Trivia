@@ -42,7 +42,7 @@ class ForQuestions extends React.Component {
       return result;
     }
   }; */
-  /*    console.log(TIMER); */
+    /*    console.log(TIMER); */
     switch (difficulty) {
     case 'easy':
       return (TEN + (TIMER * EASY_VALUE));
