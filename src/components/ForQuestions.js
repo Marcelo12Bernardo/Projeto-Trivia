@@ -4,21 +4,25 @@ import React from 'react';
 class ForQuestions extends React.Component {
   state = {
     answersSuffled: [],
+    isAnswered: false,
   };
 
   componentDidMount() {
     this.shuffle();
   }
 
-  next = () => {
-    const { nextQuestion } = this.props;
-    setTimeout(() => {
-      nextQuestion();
-      setTimeout(() => {
-        this.shuffle();
-      });
-    }, '2500');
+  revealColor = () => {
+    this.setState({
+      isAnswered: true,
+    });
   };
+  // const { nextQuestion } = this.props;
+  // setTimeout(() => {
+  //   nextQuestion();
+  //   setTimeout(() => {
+  //     this.shuffle();
+  //   });
+  // }, '2500');
 
   shuffle = () => {
     const { answers } = this.props;
@@ -35,7 +39,7 @@ class ForQuestions extends React.Component {
 
   render() {
     const { question, category, correctAnswer } = this.props;
-    const { answersSuffled } = this.state;
+    const { answersSuffled, isAnswered } = this.state;
     return (
       <div>
         <p
@@ -55,10 +59,10 @@ class ForQuestions extends React.Component {
             answersSuffled.map((answer, index) => (
               <button
                 key={ index }
-                onClick={ this.next }
-                className={ answer.includes(correctAnswer)
+                onClick={ this.revealColor }
+                className={ isAnswered && (answer.includes(correctAnswer)
                   ? 'correctButton'
-                  : 'wrongButton' }
+                  : 'wrongButton') }
                 data-testid={ answer.includes(correctAnswer)
                   ? 'correct-answer'
                   : `wrong-answer-${index}` }
