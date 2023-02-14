@@ -8,19 +8,28 @@ class Timer extends Component {
 
   componentDidMount() {
     const ONE_SECOND = 1000;
+    const { getSeconds } = this.props;
     this.intervalID = setInterval(() => {
-      this.setState((prevState) => ({
-        seconds: prevState.seconds - 1,
-      }));
+      const { seconds } = this.state;
+      this.setState({
+        seconds: seconds - 1,
+      }, getSeconds(seconds - 1));
     }, ONE_SECOND);
   }
 
-  componentDidUpdate(_, prevState) {
-    const { finishTime } = this.props;
-    if (prevState.seconds === 1) {
+  componentDidUpdate() {
+    const { finishTime, isAnswered } = this.props;
+    const { seconds } = this.state;
+    if (seconds === 0) {
       clearInterval(this.intervalID);
       finishTime();
+    } else if (isAnswered) {
+      clearInterval(this.intervalID);
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalID);
   }
 
   render() {
