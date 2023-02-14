@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Header from '../components/Header';
 
 class Feedback extends Component {
@@ -18,15 +19,38 @@ class Feedback extends Component {
     }
   };
 
+  feedbackText = (assertions) => {
+    const numberAssertions = 3;
+    if (assertions < numberAssertions) {
+      return 'Could be better...';
+    }
+    if (assertions >= numberAssertions) {
+      return 'Well Done!';
+    }
+  };
+
   render() {
+    const { assertions, score } = this.props;
     return (
       <div>
         <Header />
         <p
           data-testid="feedback-text"
         >
-          Feedback Text
+          { this.feedbackText(assertions) }
+
         </p>
+        <p
+          data-testid="feedback-total-score"
+        >
+          { score }
+        </p>
+        <p
+          data-testid="feedback-total-question"
+        >
+          { assertions }
+        </p>
+
         <button
           type="button"
           name="playAgain"
@@ -53,6 +77,13 @@ Feedback.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }),
+  assertions: PropTypes.number,
+  score: PropTypes.number,
 }.isRequired;
 
-export default Feedback;
+const mapStateToProps = ({ player }) => ({
+  assertions: player.assertions,
+  score: player.score,
+});
+
+export default connect(mapStateToProps)(Feedback);

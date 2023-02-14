@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { getScore } from '../redux/actions';
+import { getScore, getAssertions } from '../redux/actions';
 import Timer from './Timer';
 
 class ForQuestions extends React.Component {
@@ -35,7 +35,7 @@ class ForQuestions extends React.Component {
   };
 
   finishedQuestion = (seconds, name) => {
-    const { difficulty } = this.props;
+    const { difficulty, dispatch } = this.props;
     const TEN = 10;
     const TIMER = seconds;
     const EASY_VALUE = 1;
@@ -43,7 +43,7 @@ class ForQuestions extends React.Component {
     const HARD_VALUE = 3;
 
     if (name === 'correctAnswer') {
-      console.log(TEN, TIMER, difficulty);
+      dispatch(getAssertions(1));
       switch (difficulty) {
       case 'easy':
         return (TEN + (TIMER * EASY_VALUE));
