@@ -1,8 +1,8 @@
-import { GET_EMAIL, GET_NAME, GET_SCORE } from '../actions';
+import { GET_EMAIL, GET_NAME, GET_SCORE, GET_ASSERTIONS } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
-  assertions: '',
+  assertions: 0,
   score: 0,
   gravatarEmail: '',
 
@@ -22,7 +22,10 @@ const player = (state = INITIAL_STATE, action) => {
     return {
       ...state, score: action.payload + state.score,
     };
-
+  case GET_ASSERTIONS:
+    return {
+      ...state, assertions: action.payload + state.assertions,
+    };
   default:
     return state;
   }
