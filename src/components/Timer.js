@@ -6,14 +6,27 @@ class Timer extends Component {
     seconds: 30,
   };
 
+  // componentDidMount() {
+  //   const ONE_SECOND = 1000;
+  //   const { getSeconds } = this.props;
+  //   this.intervalID = setInterval(() => {
+  //     const { seconds } = this.state;
+  //     this.setState({
+  //       seconds: seconds - 1,
+  //     }, getSeconds(seconds - 1));
+  //   }, ONE_SECOND);
+  // }
+
   componentDidMount() {
     const ONE_SECOND = 1000;
     const { getSeconds } = this.props;
     this.intervalID = setInterval(() => {
-      const { seconds } = this.state;
-      this.setState({
-        seconds: seconds - 1,
-      }, getSeconds(seconds - 1));
+      this.setState((prevState) => ({
+        seconds: prevState.seconds - 1,
+      }), () => {
+        const { seconds } = this.state;
+        getSeconds(seconds);
+      });
     }, ONE_SECOND);
   }
 
