@@ -10,6 +10,7 @@ class ForQuestions extends React.Component {
     seconds: 30,
     isDisabled: false,
     isAnswered: false,
+    timer: true,
   };
 
   componentDidMount() {
@@ -67,13 +68,18 @@ class ForQuestions extends React.Component {
     }
   };
 
-  // const { nextQuestion } = this.props;
-  // setTimeout(() => {
-  //   nextQuestion();
-  //   setTimeout(() => {
-  //     this.shuffle();
-  //   });
-  // }, '2500');
+  nextQuestion = () => {
+    const { nextQuestion } = this.props;
+    nextQuestion();
+    this.setState({
+      isAnswered: false,
+      isDisabled: false,
+      timer: false,
+    });
+    setTimeout(() => {
+      this.shuffle();
+    });
+  };
 
   shuffle = () => {
     const { answers } = this.props;
@@ -85,21 +91,23 @@ class ForQuestions extends React.Component {
     }
     return this.setState({
       answersSuffled: answers,
+      timer: true,
     });
   };
 
   render() {
     const { question, category, correctAnswer,
       difficulty } = this.props;
-    const { answersSuffled, isDisabled, isAnswered } = this.state;
+    const { answersSuffled, isDisabled, isAnswered, timer } = this.state;
     return (
       <div>
         { difficulty }
-        <Timer
+        { timer
+        && <Timer
           isAnswered={ isAnswered }
           getSeconds={ this.getSeconds }
           finishTime={ this.finishTime }
-        />
+        />}
         <p
           data-testid="question-category"
         >
@@ -133,6 +141,14 @@ class ForQuestions extends React.Component {
               </button>
             ))
           }
+          { isAnswered
+          && (
+            <button
+              data-testid="btn-next"
+              onClick={ this.nextQuestion }
+            >
+              Next
+            </button>)}
         </div>
       </div>
     );
