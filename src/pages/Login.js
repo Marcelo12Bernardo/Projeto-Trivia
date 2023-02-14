@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import fetchTokenAPI from '../services/fetchAPI';
-import { getEmail, getName } from '../redux/actions';
+import { getEmail, getName, resetState } from '../redux/actions';
 
 class Login extends Component {
   state = {
@@ -10,6 +10,17 @@ class Login extends Component {
     email: '',
     isDisabled: true,
   };
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    const emptyState = {
+      name: '',
+      assertions: 0,
+      score: 0,
+      gravatarEmail: '',
+    };
+    dispatch(resetState(emptyState));
+  }
 
   handleClick = ({ target: { name } }) => {
     const { history, dispatch } = this.props;

@@ -95,6 +95,18 @@ class ForQuestions extends React.Component {
     });
   };
 
+  stringForClassName = (answer) => {
+    const { correctAnswer } = this.props;
+    const { isAnswered } = this.state;
+    if (isAnswered && answer.includes(correctAnswer)) {
+      return 'correctButton';
+    }
+    if (isAnswered && ((answer.includes(correctAnswer)) === false)) {
+      return 'wrongButton';
+    }
+    return '';
+  };
+
   render() {
     const { question, category, correctAnswer,
       difficulty } = this.props;
@@ -129,9 +141,7 @@ class ForQuestions extends React.Component {
                 name={ (answer.includes(correctAnswer)
                   ? 'correctAnswer'
                   : 'wrongAnswer') }
-                className={ isAnswered && (answer.includes(correctAnswer)
-                  ? 'correctButton'
-                  : 'wrongButton') }
+                className={ this.stringForClassName(answer) }
                 data-testid={ answer.includes(correctAnswer)
                   ? 'correct-answer'
                   : `wrong-answer-${index}` }

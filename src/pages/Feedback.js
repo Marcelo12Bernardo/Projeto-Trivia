@@ -6,6 +6,7 @@ import Header from '../components/Header';
 class Feedback extends Component {
   handleClick = ({ target: { name } }) => {
     const { history } = this.props;
+    this.saveRanking();
     switch (name) {
     case 'playAgain':
       history.push('/');
@@ -17,6 +18,19 @@ class Feedback extends Component {
     default:
       history.push('/not-found');
     }
+  };
+
+  saveRanking = () => {
+    const { name, assertions, score, gravatarEmail } = this.props;
+    const rankingObj = { name, assertions, score, gravatarEmail };
+    const initialRanking = JSON.parse(localStorage.getItem('ranking'));
+    if (initialRanking === null) {
+      localStorage.setItem('ranking', JSON.stringify([rankingObj]));
+      return '';
+    }
+    const newRanking = [...initialRanking, rankingObj];
+    const sortedRanking = newRanking.sort((a, b) => b.score - a.score);
+    localStorage.setItem('ranking', JSON.stringify(sortedRanking));
   };
 
   feedbackText = (assertions) => {
@@ -63,7 +77,10 @@ class Feedback extends Component {
           type="button"
           data-testid="btn-ranking"
           name="ranking"
-          onClick={ this.handleClick }
+          onClick={
+            // this.saveRanking
+            this.handleClick
+          }
         >
           Ranking
         </button>
@@ -77,13 +94,17 @@ Feedback.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }),
+  name: PropTypes.string,
   assertions: PropTypes.number,
   score: PropTypes.number,
+  gravatarEmail: PropTypes.string,
 }.isRequired;
 
 const mapStateToProps = ({ player }) => ({
+  name: player.name,
   assertions: player.assertions,
   score: player.score,
+  gravatarEmail: player.gravatarEmail,
 });
 
 export default connect(mapStateToProps)(Feedback);
