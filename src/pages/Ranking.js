@@ -4,27 +4,6 @@ import { connect } from 'react-redux';
 import getGravatarEmail from '../services/md5Function';
 
 class Ranking extends Component {
-  // componentDidMount() {
-  //   this.saveRanking();
-  // }
-
-  // saveRanking = () => {
-  //   const { name, assertions, score, gravatarEmail } = this.props;
-  //   const rankingObj = { name, assertions, score, gravatarEmail };
-  //   const initialRanking = JSON.parse(localStorage.getItem('ranking'));
-  //   if (initialRanking === null) {
-  //     localStorage.setItem('ranking', JSON.stringify([rankingObj]));
-  //     return '';
-  //   }
-  //   const newRanking = [...initialRanking, rankingObj];
-  //   const sortedRanking = newRanking.sort((a, b) => b.score - a.score);
-  //   localStorage.setItem('ranking', JSON.stringify(sortedRanking));
-  // };
-
-  // getRankingFromLocalStorage = () => {
-
-  // };
-
   returnLogin = () => {
     const { history } = this.props;
     history.push('/');
@@ -32,11 +11,6 @@ class Ranking extends Component {
 
   render() {
     const ranking = JSON.parse(localStorage.getItem('ranking'));
-    // const rankingObj = { name, assertions, score, gravatarEmail };
-    // if (initialRanking === null) {
-    //   localStorage.setItem('ranking', JSON.stringify([rankingObj]));
-    //   return '';
-    // }
     return (
       <main>
         <h1 data-testid="ranking-title">
@@ -53,7 +27,7 @@ class Ranking extends Component {
           <thead>
             <tr>
               <th>Nome</th>
-              <th>E-mail</th>
+              <th>Perfil</th>
               <th>Score</th>
             </tr>
           </thead>
