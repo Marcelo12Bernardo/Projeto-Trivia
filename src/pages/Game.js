@@ -30,7 +30,6 @@ class Game extends Component {
   nextQuestion = () => {
     const { indexQuestion } = this.state;
     const { history } = this.props;
-
     const maxQuestions = 4;
 
     this.setState({
