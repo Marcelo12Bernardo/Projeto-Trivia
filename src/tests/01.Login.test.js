@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 import React from 'react'
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import Login from '../pages/Login'
 import App from '../App'
 
@@ -34,7 +34,7 @@ describe ('Testa a página Login', () => {
 
     expect(playButton).toBeEnabled();
   });
-  it('Verifica se ao clicar no botão Play, rendireciona para a rota Game', () => {
+  it('Verifica se ao clicar no botão Play, rendireciona para a rota Game', async () => {
     const { history } = renderWithRouterAndRedux(<App />);
     const playButton = screen.getByTestId(BTN_PLAY)    
     const inputEmail = screen.getByTestId('input-gravatar-email')
@@ -45,9 +45,11 @@ describe ('Testa a página Login', () => {
     
     userEvent.click(playButton)
 
-    const { pathname } = history.location
+    await waitFor(() => {
+      const { pathname } = history.location
 
-    expect(pathname).toBe('/game')
+      expect(pathname).toBe('/game')
+    });
 
   })
   it('Verifica se ao clicar no botão Settings, rendireciona para a rota Settings', () => {
