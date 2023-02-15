@@ -7,6 +7,8 @@ import Login from '../pages/Login'
 import App from '../App'
 import { waitFor } from '@testing-library/react';
 import Feedback from '../pages/Feedback';
+import { act } from 'react-dom/test-utils';
+import { wait } from '@testing-library/user-event/dist/utils';
 
 const BTN_PLAY ='btn-play'
 
@@ -74,13 +76,69 @@ describe('Testes da página de Feedback', () => {
       expect(pathname).toBe('/')
     });
   });
-  it('', () => {
-    // renderWithRouterAndRedux(<Feedback />);
 
+  it('Testa se a pagina contem um header com o nome do jogador', () => {
+    renderWithRouterAndRedux(<Feedback />);
+    const name = screen.getByTestId('header-player-name');
+    expect(name).toBeInTheDocument();
   });
-  it('', () => {
 
+  it('Testa se a pagina contem um elemento com a pontuação do jogador', () => {
+    renderWithRouterAndRedux(<Feedback />);
+    const score = screen.getByTestId('header-score');
+    expect(score).toBeInTheDocument();
   });
+
+  it('Testa se a pagina contem um elemento com a imagem do jogador', () => {
+    renderWithRouterAndRedux(<Feedback />);
+    const imgGravatar = screen.getByTestId('header-profile-picture');
+    expect(imgGravatar).toBeInTheDocument();
+  });
+
+  it('Testa se a pagina contem um button Play Again', () => {
+    renderWithRouterAndRedux(<Feedback />);
+    const btnPlayAgain = screen.getByTestId('btn-play-again');
+    expect(btnPlayAgain).toBeInTheDocument();
+  });
+
+  it('Testa se a pagina contem um button Play Ranking', () => {
+    renderWithRouterAndRedux(<Feedback />);
+    const btnPlayAgain = screen.getByTestId('btn-ranking');
+    expect(btnPlayAgain).toBeInTheDocument();
+  });
+
+  it('Clicar no botão play Again leva a pagina inicial', async() => {
+ 
+    const { history } = renderWithRouterAndRedux(<App />);
+    act (() => {
+      history.push('/feedback');
+    })
+    const playAgainButton = await screen.findByTestId('btn-play-again');
+    userEvent.click(playAgainButton);
+
+    await waitFor(() => {
+      const { pathname } = history.location
+
+      expect(pathname).toBe('/')
+    });
+  });
+
+  it('Clicar no botão ranking leva a pagina Ranking', async() => {
+ 
+    const { history } = renderWithRouterAndRedux(<App />);
+    act (() => {
+      history.push('/feedback');
+    })
+    const rankingButton = await screen.findByTestId('btn-ranking');
+    userEvent.click(rankingButton);
+
+    await waitFor(() => {
+      const { pathname } = history.location
+
+      expect(pathname).toBe('/ranking')
+    });
+  });
+
   it('', () => {
 
   });

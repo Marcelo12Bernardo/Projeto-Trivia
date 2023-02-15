@@ -7,17 +7,21 @@ class Feedback extends Component {
   handleClick = ({ target: { name } }) => {
     const { history } = this.props;
     this.saveRanking();
-    switch (name) {
-    case 'playAgain':
+    if (name === 'playAgain') {
       history.push('/');
-      break;
-
-    case 'ranking':
+    } else if (name === 'ranking') {
       history.push('/ranking');
-      break;
-    default:
-      history.push('/not-found');
     }
+    //   switch (name) {
+    //   case 'playAgain':
+    //     history.push('/');
+    //     break;
+    //   case 'ranking':
+    //     history.push('/ranking');
+    //     break;
+    //   default:
+    //     break;
+    //   }
   };
 
   saveRanking = () => {
